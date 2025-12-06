@@ -29,3 +29,6 @@ A comprehensive Learning Management System (LMS) and Content Management System (
 ```bash
 git clone <repository-url>
 cd yazz-academy
+=======
+# Yazz-academy
+A modern Flask-based LMS + CMS for Yazz Communication Academy. Includes multi-role dashboards, course management, exams, live classes, code sandbox, payments, certificates, and a full academic workflow. Fast, secure, and production-ready.
