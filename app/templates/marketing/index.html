@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Yazz Communication Academy{% endblock %}
+
+{% block content %}
+<div class="hero-section text-center py-5 mb-5 bg-light rounded">
+    <h1 class="display-4 fw-bold text-primary">Yazz Communication Academy</h1>
+    <p class="lead">Be Inspired, Learn Today, Lead Tomorrow</p>
+    <p class="mb-4">Transform your career with industry-leading IT education and professional development programs.</p>
+    <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg me-2">Start Your Journey</a>
+    <a href="{{ url_for('marketing.courses') }}" class="btn btn-outline-primary btn-lg">Explore Programs</a>
+</div>
+
+<div class="row mb-5">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center">
+                <i class="fas fa-laptop-code fa-3x text-primary mb-3"></i>
+                <h3 class="card-title">Tech & Digital Skills</h3>
+                <p class="card-text">Python, Web Development, Cybersecurity, Data Analytics and more.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center">
+                <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                <h3 class="card-title">Communication & Soft Skills</h3>
+                <p class="card-text">Public Speaking, Speech Writing, Storytelling for professional growth.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center">
+                <i class="fas fa-chalkboard-teacher fa-3x text-primary mb-3"></i>
+                <h3 class="card-title">Teacher Training</h3>
+                <p class="card-text">Scratch 3.0, Canva, Google Classroom for modern educators.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center py-4">
+    <h2>Ready to Transform Your Career?</h2>
+    <p class="lead mb-4">Join hundreds of successful graduates who transformed their careers with YCA.</p>
+    <a href="{{ url_for('auth.register') }}" class="btn btn-success btn-lg">Apply Now</a>
+</div>
+{% endblock %}
