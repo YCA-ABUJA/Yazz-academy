@@ -1,12 +1,8 @@
 from app.extensions import db
 from datetime import datetime
+from app.models.user_roles import user_roles
 
-# Association table for user roles
-user_roles = db.Table('user_roles',
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), primary_key=True),
-    db.Column('role_id', db.Integer, db.ForeignKey('roles.id', ondelete='CASCADE'), primary_key=True),
-    db.Column('assigned_at', db.DateTime, default=datetime.utcnow)
-)
+
 
 class Role(db.Model):
     """Role model for RBAC"""

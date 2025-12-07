@@ -10,12 +10,12 @@ class Config:
     
     # Database Configuration
     SQLALCHEMY_DATABASE_URI = (
-        f"mysql://{os.environ.get('DB_USER', 'root')}:"
-        f"{os.environ.get('DB_PASSWORD', '')}@"
-        f"{os.environ.get('DB_HOST', 'localhost')}:"
-        f"{os.environ.get('DB_PORT', '3306')}/"
-        f"{os.environ.get('DB_NAME', 'yazz_academy')}"
-    )
+    f"mysql+pymysql://{os.environ.get('DB_USER', 'root')}:"
+    f"{os.environ.get('DB_PASSWORD', '')}@"
+    f"{os.environ.get('DB_HOST', 'localhost')}:"
+    f"{os.environ.get('DB_PORT', '3306')}/"
+    f"{os.environ.get('DB_NAME', 'yazz_academy')}"
+)
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ENGINE_OPTIONS = {
         'pool_recycle': 280,
@@ -23,7 +23,10 @@ class Config:
     }
     
     # File Upload Configuration
+try:
     MAX_CONTENT_LENGTH = int(os.environ.get('MAX_CONTENT_LENGTH', 16 * 1024 * 1024))
+except ValueError:
+    MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # Default to 16 MB if invalid
     UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER', 'uploads')
     ALLOWED_EXTENSIONS_IMAGES = set(os.environ.get('ALLOWED_EXTENSIONS_IMAGES', 'pdf,png,jpg,jpeg,gif').split(','))
     ALLOWED_EXTENSIONS_DOCS = set(os.environ.get('ALLOWED_EXTENSIONS_DOCS', 'pdf,doc,docx').split(','))
