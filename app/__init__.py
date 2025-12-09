@@ -1,25 +1,62 @@
 from flask import Flask
 from config import config
-from flask_migrate import Migrate
+from .extensions import init_extensions
+import os
 
-from app.extensions import init_extensions, db
-
-def create_app(config_name: str='development'):
+def create_app(config_name='default'):
+    """Application factory"""
     app = Flask(__name__)
+    
+    # Load configuration
     app.config.from_object(config[config_name])
-
+    
+    # Ensure upload folder exists
+    upload_folder = app.config['UPLOAD_FOLDER']
+    if not os.path.exists(upload_folder):
+        os.makedirs(upload_folder)
+        os.makedirs(os.path.join(upload_folder, 'photos'))
+        os.makedirs(os.path.join(upload_folder, 'resumes'))
+        os.makedirs(os.path.join(upload_folder, 'course_materials'))
+    
     # Initialize extensions
     init_extensions(app)
-
-    # Initialize migrations
-    migrate = Migrate(app, db)
-
-    # Import models so Alembic can detect them
-    from app.models import User, Role, user_roles
-
+    
+    # Register blueprints
+    register_blueprints(app)
+    
+    # Register error handlers
+    register_error_handlers(app)
+    
     # Register CLI commands
     from app.commands import init_db_command, create_admin, seed_db
     app.cli.add_command(init_db_command)
     app.cli.add_command(create_admin)
     app.cli.add_command(seed_db)
+    
     return app
+
+
+def register_blueprints(app):
+    """Register all blueprints"""
+    from .auth.routes import auth_bp
+    from .admin.routes import admin_bp
+    from .teacher.routes import teacher_bp
+    from .student.routes import student_bp
+    from .marketing.routes import marketing_bp
+    
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(admin_bp, url_prefix='/admin')
+    app.register_blueprint(teacher_bp, url_prefix='/teacher')
+    app.register_blueprint(student_bp, url_prefix='/student')
+    app.register_blueprint(marketing_bp)
+
+
+def register_error_handlers(app):
+    """Register error handlers"""
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return 'Page not found', 404
+    
+    @app.errorhandler(500)
+    def internal_server_error(e):
+        return 'Internal server error', 500

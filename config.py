@@ -50,10 +50,13 @@ except ValueError:
     SESSION_COOKIE_HTTPONLY = True
     REMEMBER_COOKIE_HTTPONLY = True
     
+   
     # Rate Limiting
     RATELIMIT_ENABLED = True
     RATELIMIT_STORAGE_URL = os.environ.get('RATE_LIMIT_STORAGE_URL', 'memory://')
     RATELIMIT_STRATEGY = 'fixed-window'
+    RATELIMIT_DEFAULT = ["200 per day", "50 per hour"]
+    
     
     # Application URLs
     APP_URL = os.environ.get('APP_URL', 'http://localhost:5000')
