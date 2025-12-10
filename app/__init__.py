@@ -1,6 +1,7 @@
 from flask import Flask
 from config import config
 from .extensions import init_extensions
+from datetime import datetime
 import os
 
 def create_app(config_name='default'):
@@ -21,6 +22,19 @@ def create_app(config_name='default'):
     # Initialize extensions
     init_extensions(app)
     
+     # Register template filters
+    @app.template_filter('datetime_format')
+    def datetime_format(value, format='%Y-%m-%d %H:%M'):
+        if value is None:
+            return ""
+        return value.strftime(format)
+    
+    @app.context_processor
+    def utility_processor():
+        def now():
+            return datetime.now()
+        return dict(now=now)
+
     # Register blueprints
     register_blueprints(app)
     

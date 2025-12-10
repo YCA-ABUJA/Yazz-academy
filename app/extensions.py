@@ -24,15 +24,17 @@ mail = Mail()
 # JWT for API
 jwt = JWTManager()
 
-# Rate Limiting with default limits
-limiter = Limiter(
-    key_func=get_remote_address,
-    default_limits=["200 per day", "50 per hour"],
-    storage_uri="memory://"  # Explicitly set storage
-)
+# Rate Limiting
+limiter = Limiter(key_func=get_remote_address)
 
 # WebSockets
 socketio = SocketIO(cors_allowed_origins="*")
+
+# User loader callback for Flask-Login
+@login_manager.user_loader
+def load_user(user_id):
+    from app.models.user import User
+    return User.query.get(int(user_id))
 
 # Initialize all extensions
 def init_extensions(app):
@@ -49,13 +51,5 @@ def init_extensions(app):
     login_manager.login_view = 'auth.login'
     login_manager.login_message_category = 'info'
     login_manager.refresh_view = 'auth.login'
-    
-    return app
-    
-    # User loader for Flask-Login
-    @login_manager.user_loader
-    def load_user(user_id):
-        from .models.user import User
-        return User.query.get(int(user_id))
     
     return app

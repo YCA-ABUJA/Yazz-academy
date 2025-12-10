@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Courses - Yazz Communication Academy{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h1 class="display-5">Our Courses & Programs</h1>
+        <p class="lead">Choose from our comprehensive range of IT education programs</p>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Course Categories</h5>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-outline-primary active">All Courses</button>
+                    <button type="button" class="btn btn-outline-primary">Tech & Digital Skills</button>
+                    <button type="button" class="btn btn-outline-primary">Communication & Soft Skills</button>
+                    <button type="button" class="btn btn-outline-primary">Teacher Training</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Python Programming</h5>
+                <h6 class="card-subtitle mb-2 text-muted">13 weeks • ₦95,000</h6>
+                <p class="card-text">Learn Python from basics to advanced concepts with hands-on projects.</p>
+                <a href="#" class="btn btn-primary">Learn More</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Web Development</h5>
+                <h6 class="card-subtitle mb-2 text-muted">14 weeks • ₦120,000</h6>
+                <p class="card-text">Full-stack web development with modern frameworks.</p>
+                <a href="#" class="btn btn-primary">Learn More</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Data Analytics</h5>
+                <h6 class="card-subtitle mb-2 text-muted">8 weeks • ₦90,000</h6>
+                <p class="card-text">Learn to analyze and visualize data for insights.</p>
+                <a href="#" class="btn btn-primary">Learn More</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-4">
+    <a href="{{ url_for('auth.register') }}" class="btn btn-success btn-lg">Enroll Now</a>
+</div>
+{% endblock %}

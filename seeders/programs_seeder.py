@@ -183,11 +183,12 @@ def seed_programs():
                 'Career readiness'
             ]
         },
-        {
+         {
             'code': 'CMS',
             'name': 'Cybersecurity Mythology Series',
             'category': 'Seasonal & Special',
             'description': 'Special series on cybersecurity through mythology (on request).',
+            'price_ngn': 75000.00,  # Added price instead of None
             'learning_outcomes': [
                 'Understand cybersecurity through stories',
                 'Learn security concepts in engaging way',

@@ -11,23 +11,15 @@ def create_app(config_name='default'):
     app.config.from_object(config[config_name])
     
     # Ensure upload folder exists
-    upload_folder = app.config['UPLOAD_FOLDER']
+    upload_folder = app.config.get('UPLOAD_FOLDER', 'uploads')
     if not os.path.exists(upload_folder):
         os.makedirs(upload_folder)
-        os.makedirs(os.path.join(upload_folder, 'photos'))
-        os.makedirs(os.path.join(upload_folder, 'resumes'))
-        os.makedirs(os.path.join(upload_folder, 'course_materials'))
+        os.makedirs(os.path.join(upload_folder, 'photos'), exist_ok=True)
+        os.makedirs(os.path.join(upload_folder, 'resumes'), exist_ok=True)
+        os.makedirs(os.path.join(upload_folder, 'course_materials'), exist_ok=True)
     
     # Initialize extensions
     init_extensions(app)
-    
-    # Import models AFTER extensions are initialized
-    with app.app_context():
-        # Import models for Flask-Migrate to detect
-        from .models.user import User
-        from .models.role import Role
-        from .models.program import Program
-        from .models.registration_sequence import RegistrationSequence
     
     # Register blueprints
     register_blueprints(app)

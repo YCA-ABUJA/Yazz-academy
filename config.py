@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+basedir = os.path.abspath(os.path.dirname(__file__))
+
 class Config:
     # Flask Configuration
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev-secret-key-change-in-production'
@@ -10,12 +12,12 @@ class Config:
     
     # Database Configuration
     SQLALCHEMY_DATABASE_URI = (
-    f"mysql+pymysql://{os.environ.get('DB_USER', 'root')}:"
-    f"{os.environ.get('DB_PASSWORD', '')}@"
-    f"{os.environ.get('DB_HOST', 'localhost')}:"
-    f"{os.environ.get('DB_PORT', '3306')}/"
-    f"{os.environ.get('DB_NAME', 'yazz_academy')}"
-)
+        f"mysql+pymysql://{os.environ.get('DB_USER', 'root')}:"
+        f"{os.environ.get('DB_PASSWORD', '')}@"
+        f"{os.environ.get('DB_HOST', 'localhost')}:"
+        f"{os.environ.get('DB_PORT', '3306')}/"
+        f"{os.environ.get('DB_NAME', 'yazz_academy')}"
+    )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ENGINE_OPTIONS = {
         'pool_recycle': 280,
@@ -23,11 +25,8 @@ class Config:
     }
     
     # File Upload Configuration
-try:
     MAX_CONTENT_LENGTH = int(os.environ.get('MAX_CONTENT_LENGTH', 16 * 1024 * 1024))
-except ValueError:
-    MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # Default to 16 MB if invalid
-    UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER', 'uploads')
+    UPLOAD_FOLDER = os.path.join(basedir, 'uploads')
     ALLOWED_EXTENSIONS_IMAGES = set(os.environ.get('ALLOWED_EXTENSIONS_IMAGES', 'pdf,png,jpg,jpeg,gif').split(','))
     ALLOWED_EXTENSIONS_DOCS = set(os.environ.get('ALLOWED_EXTENSIONS_DOCS', 'pdf,doc,docx').split(','))
     
@@ -50,13 +49,11 @@ except ValueError:
     SESSION_COOKIE_HTTPONLY = True
     REMEMBER_COOKIE_HTTPONLY = True
     
-   
-    # Rate Limiting
+    # Rate Limiting - FIXED: Use string format
     RATELIMIT_ENABLED = True
     RATELIMIT_STORAGE_URL = os.environ.get('RATE_LIMIT_STORAGE_URL', 'memory://')
     RATELIMIT_STRATEGY = 'fixed-window'
-    RATELIMIT_DEFAULT = ["200 per day", "50 per hour"]
-    
+    RATELIMIT_DEFAULT = "200 per day, 50 per hour"  # FIX: Changed from tuple to string
     
     # Application URLs
     APP_URL = os.environ.get('APP_URL', 'http://localhost:5000')
@@ -66,12 +63,15 @@ except ValueError:
 class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_ECHO = True
+    # Use more permissive limits in development
+    RATELIMIT_DEFAULT = "500 per day, 100 per hour"
 
 
 class TestingConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
     WTF_CSRF_ENABLED = False
+    RATELIMIT_ENABLED = False  # Disable rate limiting for tests
 
 
 class ProductionConfig(Config):

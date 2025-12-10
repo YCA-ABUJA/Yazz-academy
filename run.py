@@ -1,13 +1,11 @@
-#!/usr/bin/env python3
-"""
-Development server runner
-"""
+# run.py
 import os
+from dotenv import load_dotenv
 from app import create_app
 
-# Create application instance
-app = create_app('development')
+load_dotenv()
+
+app = create_app(os.getenv('FLASK_ENV', 'development'))
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
