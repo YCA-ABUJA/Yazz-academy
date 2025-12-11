@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background-color: #1e3a8a; color: white; padding: 20px; text-align: center; }
+        .content { background-color: #f9f9f9; padding: 30px; }
+        .credentials { 
+            background-color: #e8f4fd; 
+            padding: 15px; 
+            border-left: 4px solid #3b82f6;
+            margin: 20px 0;
+        }
+        .button { 
+            display: inline-block; 
+            background-color: #3b82f6; 
+            color: white; 
+            padding: 12px 24px; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            margin: 20px 0;
+        }
+        .footer { 
+            background-color: #f1f1f1; 
+            padding: 20px; 
+            text-align: center; 
+            font-size: 12px; 
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Yazz Communication Academy</h1>
+            <p>Welcome to Our Learning Community!</p>
+        </div>
+        
+        <div class="content">
+            <h2>Welcome, {{ user.first_name }}!</h2>
+            <p>Congratulations! Your email has been successfully verified and your account is now active.</p>
+            
+            <div class="credentials">
+                <p><strong>Your Account Details:</strong></p>
+                <p>Username: <strong>{{ user.username }}</strong></p>
+                <p>Email: <strong>{{ user.email }}</strong></p>
+            </div>
+            
+            <p>You can now log in to your dashboard and begin your learning journey with us:</p>
+            
+            <div style="text-align: center;">
+                <a href="{{ login_url }}" class="button">Access Your Dashboard</a>
+            </div>
+            
+            <h3>Next Steps:</h3>
+            <ol>
+                <li>Complete your profile with additional information</li>
+                <li>Explore available courses and programs</li>
+                <li>Connect with instructors and fellow students</li>
+                <li>Start your first course module</li>
+            </ol>
+            
+            <p>If you need assistance or have any questions, our support team is here to help.</p>
+            
+            <p>Best regards,<br>
+            The Yazz Communication Academy Team</p>
+        </div>
+        
+        <div class="footer">
+            <p>© {{ now().year }} Yazz Communication Academy. All rights reserved.</p>
+            <p>Flat 2A, House 83B, El-Habitat Close, Dogongada, Abuja City</p>
+            <p>Email: services@yca-abuja.com | Phone: +234-907-986-9903</p>
+        </div>
+    </div>
+</body>
+</html>

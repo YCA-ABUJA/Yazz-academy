@@ -3,90 +3,361 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Yazz Communication Academy{% endblock %}</title>
+    <title>{% block title %}Yazz Communication Academy | IT Education & Career Training{% endblock %}</title>
+    
+    {% block meta %}
+    <meta name="description" content="Transform your career with Yazz Communication Academy's industry-leading IT education. Software Engineering, Web Development, Data Analytics & Cybersecurity courses.">
+    <meta name="keywords" content="IT education, software engineering, web development, data analytics, cybersecurity, computer literacy, career training, coding bootcamp, AI career, virtual assistant, graphic design">
+    <meta name="author" content="Yazz Communication Academy">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Yazz Communication Academy | IT Education & Career Training">
+    <meta property="og:description" content="Transform your career with industry-leading IT education and professional development programs designed for the digital age.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yca-abuja.com">
+    <meta property="og:image" content="https://yca-abuja.com/images/og-image.jpg">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Yazz Communication Academy | IT Education & Career Training">
+    <meta name="twitter:description" content="Transform your career with industry-leading IT education and professional development programs.">
+    <meta name="twitter:image" content="https://yca-abuja.com/images/twitter-image.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://yca-abuja.com">
+    {% endblock %}
+    
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "name": "Yazz Communication Academy",
+      "description": "Premier institution providing quality IT education and professional development programs",
+      "url": "https://yca-abuja.com",
+      "logo": "https://yca-abuja.com/images/logo.png",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Flat 2A, House 83B, El-Habitat Close, Dogongada",
+        "addressLocality": "Abuja City",
+        "addressCountry": "Nigeria"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+234-907-986-9903",
+        "contactType": "admissions",
+        "email": "services@yca-abuja.com",
+        "areaServed": "NG"
+      },
+      "sameAs": [
+        "https://www.facebook.com/yazzCom",
+        "https://www.linkedin.com/company/yazzacademy",
+        "https://twitter.com/yazzacademy"
+      ]
+    }
+    </script>
+    
+    <!-- Favicon and Icons -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16x16.png') }}">
+
+    
+    <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    {% block skip_link %}
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    {% endblock %}
+    
+    {% block navbar %}
+    <!-- Fixed Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="{{ url_for('marketing.index') }}">
-                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="YCA Logo" height="40" class="me-2">
-                Yazz Communication Academy
+            <a class="navbar-brand fw-bold school-brand" href="{{ url_for('marketing.index') }}" style="color: var(--primary-blue);">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Yazz Communication Academy Logo" height="35" class="me-2">
+                <div>
+                    <div class="school-name">Yazz Communication Academy</div>
+                    <span class="school-motto">Be Inspired, Learn Today, Lead Tomorrow</span>
+                </div>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('marketing.index') }}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('marketing.courses') }}">Courses</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('marketing.about') }}">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('marketing.contact') }}">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#programs">Programs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#why-choose">Why Choose Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#reviews">Reviews</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#companies">Partners</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                 </ul>
-                <ul class="navbar-nav">
+                <div class="d-flex">
                     {% if current_user.is_authenticated %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
-                                {{ current_user.display_name }}
-                            </a>
-                            <ul class="dropdown-menu">
-                                {% if current_user.has_role('System Admin') %}
-                                    <li><a class="dropdown-item" href="{{ url_for('admin.dashboard') }}">Admin Dashboard</a></li>
-                                {% elif current_user.has_role('Teacher') %}
-                                    <li><a class="dropdown-item" href="{{ url_for('teacher.dashboard') }}">Teacher Dashboard</a></li>
-                                {% elif current_user.has_role('Student') %}
-                                    <li><a class="dropdown-item" href="{{ url_for('student.dashboard') }}">Student Dashboard</a></li>
-                                {% endif %}
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a></li>
-                            </ul>
-                        </li>
+                        {% if current_user.has_role('System Admin') %}
+                            <a href="{{ url_for('admin.dashboard') }}" class="btn btn-outline-primary me-2">Admin Dashboard</a>
+                        {% elif current_user.has_role('Teacher') %}
+                            <a href="{{ url_for('teacher.dashboard') }}" class="btn btn-outline-primary me-2">Teacher Dashboard</a>
+                        {% elif current_user.has_role('Student') %}
+                            <a href="{{ url_for('student.dashboard') }}" class="btn btn-outline-primary me-2">Student Dashboard</a>
+                        {% endif %}
+                        <a href="{{ url_for('auth.logout') }}" class="btn btn-primary">Logout</a>
                     {% else %}
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}">Login</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}">Register</a></li>
+                        <a href="{{ url_for('auth.login') }}" class="btn btn-outline-primary me-2">Login</a>
+                        <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Apply Now</a>
                     {% endif %}
-                </ul>
+                </div>
             </div>
         </div>
     </nav>
+    {% endblock %}
 
-    <main class="container py-4">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
+    <main id="main-content">
+        {% block breadcrumb %}
+        <!-- Breadcrumb -->
+        <div class="container mt-5 pt-5">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('marketing.index') }}">Home</a></li>
+                    {% block breadcrumb_items %}{% endblock %}
+                </ol>
+            </nav>
+        </div>
+        {% endblock %}
 
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="bg-dark text-white py-4 mt-5">
+    {% block footer %}
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
-                    <h5>Yazz Communication Academy</h5>
-                    <p class="mb-0">Be Inspired, Learn Today, Lead Tomorrow</p>
-                    <p class="text-muted small mt-2">© {{ now().year }} Yazz Communication Academy. All rights reserved.</p>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <div class="footer-brand">
+                        <h2 class="h5 mb-2"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="Yazz Communication Academy Logo" height="35" class="me-2">Yazz Communication Academy</h2>
+                        <p class="footer-motto mb-3">Be Inspired, Learn Today, Lead Tomorrow</p>
+                        <p class="text-muted small">Transforming careers through quality IT education and professional development programs.</p>
+                        <div class="social-icons mt-3">
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-6 text-md-end">
-                    <p>Flat 2A, House 83B, El-Habitat Close, Dogongada, Abuja City</p>
-                    <p>Email: services@yca-abuja.com</p>
-                    <p>Phone: +234-907-986-9903</p>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <div class="footer-links">
+                        <h5>Quick Links</h5>
+                        <ul>
+                            <li><a href="{{ url_for('marketing.index') }}">Home</a></li>
+                            <li><a href="#programs">Programs</a></li>
+                            <li><a href="#why-choose">Why Choose Us</a></li>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 mb-4 mb-md-0">
+                    <div class="footer-links">
+                        <h5>Programs</h5>
+                        <ul>
+                            <li><a href="#programs">Software Engineering</a></li>
+                            <li><a href="#programs">Web Development</a></li>
+                            <li><a href="#programs">Data Analytics</a></li>
+                            <li><a href="#programs">Cybersecurity</a></li>
+                            <li><a href="#programs">AI Career Essentials</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4">
+                    <div class="footer-links">
+                        <h5>Contact Info</h5>
+                        <ul>
+                            <li><i class="fas fa-map-marker-alt me-2"></i> Flat 2A, House 83B, El-Habitat Close, Dogongada, Abuja</li>
+                            <li><i class="fas fa-phone me-2"></i> +234-907-986-9903</li>
+                            <li><i class="fas fa-envelope me-2"></i> services@yca-abuja.com</li>
+                            <li><i class="fas fa-clock me-2"></i> Mon - Fri: 9:00 AM - 6:00 PM</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4" style="border-color: #6c757d;">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="text-muted mb-0">&copy; <span id="current-year"></span> Yazz Communication Academy. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="text-muted small mb-0">
+                        <a href="#" class="text-muted text-decoration-none me-3" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy</a>
+                        <a href="#" class="text-muted text-decoration-none" data-bs-toggle="modal" data-bs-target="#termsModal">Terms of Service</a>
+                    </p>
                 </div>
             </div>
         </div>
     </footer>
+    {% endblock %}
 
+    <!-- Modals -->
+    {% block modals %}
+    <!-- Privacy Policy Modal -->
+    <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title h5" id="privacyModalLabel">Privacy Policy</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h3>Yazz Communication Academy Privacy Policy</h3>
+                    <p>Last updated: <span id="privacy-date"></span></p>
+                    
+                    <h4>1. Information We Collect</h4>
+                    <p>Yazz Communication Academy ("we," "our," or "us") is committed to protecting your privacy. We collect information that you provide directly to us, including:</p>
+                    <ul>
+                        <li>Personal identification information (Name, email address, phone number, etc.)</li>
+                        <li>Academic and professional background information</li>
+                        <li>Payment information for course registration</li>
+                        <li>Communication preferences</li>
+                    </ul>
+                    
+                    <h4>2. How We Use Your Information</h4>
+                    <p>We use the information we collect to:</p>
+                    <ul>
+                        <li>Provide, maintain, and improve our educational services</li>
+                        <li>Process your registrations and payments</li>
+                        <li>Send you administrative information, including updates to our programs</li>
+                        <li>Respond to your comments, questions, and requests</li>
+                        <li>Monitor and analyze trends, usage, and activities in connection with our services</li>
+                    </ul>
+                    
+                    <h4>3. Information Sharing</h4>
+                    <p>We do not sell, trade, or otherwise transfer your personally identifiable information to outside parties except:</p>
+                    <ul>
+                        <li>To trusted third parties who assist us in operating our website, conducting our business, or servicing you</li>
+                        <li>When we believe release is appropriate to comply with the law, enforce our site policies, or protect ours or others' rights, property, or safety</li>
+                    </ul>
+                    
+                    <h4>4. Data Security</h4>
+                    <p>We implement appropriate technical and organizational security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.</p>
+                    
+                    <h4>5. Your Rights</h4>
+                    <p>You have the right to:</p>
+                    <ul>
+                        <li>Access and receive a copy of your personal data</li>
+                        <li>Rectify or update your personal data</li>
+                        <li>Request deletion of your personal data</li>
+                        <li>Object to processing of your personal data</li>
+                    </ul>
+                    
+                    <h4>6. Contact Us</h4>
+                    <p>If you have any questions about this Privacy Policy, please contact us at:</p>
+                    <p>Email: services@yca-abuja.com<br>
+                    Phone: +234-907-986-9903<br>
+                    Address: Flat 2A, House 83B, El-Habitat Close, Dogongada, Abuja City</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms of Service Modal -->
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title h5" id="termsModalLabel">Terms of Service</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h3>Yazz Communication Academy Terms of Service</h3>
+                    <p>Last updated: <span id="terms-date"></span></p>
+                    
+                    <h4>1. Acceptance of Terms</h4>
+                    <p>By accessing and using the services provided by Yazz Communication Academy ("we," "our," or "us"), you agree to be bound by these Terms of Service and all applicable laws and regulations.</p>
+                    
+                    <h4>2. Educational Services</h4>
+                    <p>Yazz Communication Academy provides IT education and professional development programs. We reserve the right to:</p>
+                    <ul>
+                        <li>Modify or discontinue any program or course</li>
+                        <li>Change program schedules, instructors, or curriculum</li>
+                        <li>Update course materials and learning resources</li>
+                    </ul>
+                    
+                    <h4>3. Student Responsibilities</h4>
+                    <p>As a student, you agree to:</p>
+                    <ul>
+                        <li>Provide accurate and complete information during registration</li>
+                        <li>Maintain the confidentiality of your account credentials</li>
+                        <li>Adhere to our code of conduct and academic integrity policies</li>
+                        <li>Complete assignments and assessments by specified deadlines</li>
+                        <li>Respect the intellectual property rights of instructors and fellow students</li>
+                    </ul>
+                    
+                    <h4>4. Payment and Refunds</h4>
+                    <p>Payment for programs must be made according to the specified schedule. Our refund policy is as follows:</p>
+                    <ul>
+                        <li>Full refund if cancellation occurs at least 14 days before program start date</li>
+                        <li>50% refund if cancellation occurs between 7-14 days before program start date</li>
+                        <li>No refund for cancellations less than 7 days before program start date</li>
+                    </ul>
+                    
+                    <h4>5. Intellectual Property</h4>
+                    <p>All course materials, including but not limited to lectures, presentations, assignments, and assessments, are the intellectual property of Yazz Communication Academy and are provided for your personal educational use only.</p>
+                    
+                    <h4>6. Limitation of Liability</h4>
+                    <p>Yazz Communication Academy shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use our services.</p>
+                    
+                    <h4>7. Termination</h4>
+                    <p>We reserve the right to terminate or suspend access to our services immediately, without prior notice, for conduct that we believe violates these Terms of Service or is harmful to other students, instructors, or the institution.</p>
+                    
+                    <h4>8. Changes to Terms</h4>
+                    <p>We may update these Terms of Service from time to time. We will notify you of any changes by posting the new Terms of Service on this page and updating the "Last updated" date.</p>
+                    
+                    <h4>9. Contact Information</h4>
+                    <p>If you have any questions about these Terms of Service, please contact us at:</p>
+                    <p>Email: services@yca-abuja.com<br>
+                    Phone: +234-907-986-9903<br>
+                    Address: Flat 2A, House 83B, El-Habitat Close, Dogongada, Abuja City</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+
+    <!-- JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    {% block extra_js %}{% endblock %}
+    
+    {% block extra_js %}
+    <script>
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // Set privacy and terms dates
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('privacy-date').textContent = new Date().toLocaleDateString('en-US', options);
+        document.getElementById('terms-date').textContent = new Date().toLocaleDateString('en-US', options);
+    </script>
+    {% endblock %}
 </body>
 </html>

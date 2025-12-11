@@ -2,48 +2,1370 @@
 
 {% block title %}Home - Yazz Communication Academy{% endblock %}
 
+{% block breadcrumb_items %}
+    <li class="breadcrumb-item active" aria-current="page">IT Education Programs</li>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --primary-blue: #1e3a8a;
+        --secondary-blue: #3b82f6;
+        --accent-red: #dc2626;
+        --gold: #d97706;
+        --light-blue: #dbeafe;
+        --dark-blue: #1e40af;
+    }
+    
+    /* Skip to main content for accessibility */
+    .skip-link {
+        position: absolute;
+        top: -40px;
+        left: 6px;
+        background: var(--primary-blue);
+        color: white;
+        padding: 8px;
+        z-index: 10000;
+        text-decoration: none;
+        border-radius: 0 0 4px 4px;
+    }
+    
+    .skip-link:focus {
+        top: 0;
+    }
+    
+    /* Fixed Navigation */
+    .navbar {
+        background: rgba(255, 255, 255, 0.95) !important;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        padding: 0.5rem 0;
+    }
+    
+    .navbar.scrolled {
+        background: rgba(255, 255, 255, 0.98) !important;
+        padding: 0.3rem 0;
+    }
+    
+    .nav-link {
+        color: var(--primary-blue) !important;
+        font-weight: 500;
+        margin: 0 8px;
+        transition: color 0.3s ease;
+        font-size: 0.9rem;
+    }
+    
+    .nav-link:hover {
+        color: var(--accent-red) !important;
+    }
+    
+    /* School motto styling */
+    .school-brand {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        text-align: left;
+    }
+    
+    .school-name {
+        font-size: 1.1rem;
+        line-height: 1.2;
+    }
+    
+    .school-motto {
+        font-size: 0.7rem;
+        font-weight: 400;
+        color: var(--accent-red);
+        letter-spacing: 0.3px;
+        display: block;
+        line-height: 1.1;
+    }
+    
+    .footer-motto {
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: #6c757d;
+        letter-spacing: 0.5px;
+        margin-top: 3px;
+    }
+    
+    .footer-brand {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    /* Hero Section with Slider */
+    .hero-section {
+        height: 100vh;
+        min-height: 600px;
+        position: relative;
+        overflow: hidden;
+        padding-top: 80px;
+    }
+    
+    .hero-slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .hero-slide.active {
+        opacity: 1;
+        z-index: 1;
+    }
+    
+    .slide-1 {
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+    }
+    
+    .slide-2 {
+        background: linear-gradient(135deg, var(--accent-red) 0%, var(--gold) 100%);
+    }
+    
+    .slide-3 {
+        background: linear-gradient(135deg, var(--dark-blue) 0%, var(--secondary-blue) 100%);
+    }
+    
+    .hero-content {
+        color: white;
+        text-align: center;
+        z-index: 2;
+        padding: 20px;
+    }
+    
+    .school-logo {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 20px;
+        border-radius: 50%;
+        border: 4px solid white;
+        object-fit: cover;
+    }
+    
+    .motto {
+        font-size: 1.2rem;
+        font-weight: 500;
+        margin-bottom: 20px;
+    }
+    
+    /* Stats Section */
+    .stats-section {
+        background: var(--light-blue);
+        padding: 80px 0;
+    }
+    
+    .stat-number {
+        font-size: 3.5rem;
+        font-weight: bold;
+        color: var(--primary-blue);
+        margin-bottom: 10px;
+    }
+    
+    /* Programs Section */
+    .programs-section {
+        padding: 100px 0;
+        background: white;
+    }
+    
+    .programs-carousel {
+        position: relative;
+        overflow: hidden;
+        padding: 0 60px;
+    }
+    
+    .programs-track {
+        display: flex;
+        transition: transform 0.5s ease;
+        gap: 20px;
+    }
+    
+    .program-card {
+        flex: 0 0 calc(33.333% - 20px);
+        min-width: 300px;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .program-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    
+    .program-icon {
+        font-size: 3rem;
+        color: var(--secondary-blue);
+        margin-bottom: 20px;
+    }
+    
+    .carousel-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: var(--primary-blue);
+        color: white;
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        z-index: 10;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .carousel-btn:hover {
+        background: var(--accent-red);
+        transform: translateY(-50%) scale(1.1);
+    }
+    
+    .carousel-btn.prev {
+        left: 0;
+    }
+    
+    .carousel-btn.next {
+        right: 0;
+    }
+    
+    /* Why Choose Us Section - Auto Scroll */
+    .why-choose-section {
+        padding: 100px 0;
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+        color: white;
+        overflow: hidden;
+    }
+    
+    .features-scroll-container {
+        position: relative;
+        overflow: hidden;
+        padding: 20px 0;
+    }
+    
+    .features-track {
+        display: flex;
+        animation: scrollFeatures 30s linear infinite;
+        width: calc(250px * 12);
+    }
+    
+    @keyframes scrollFeatures {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(calc(-250px * 6));
+        }
+    }
+    
+    .feature-card {
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 25px;
+        margin: 0 10px;
+        border: 1px solid rgba(255,255,255,0.2);
+        transition: transform 0.3s ease;
+        min-width: 230px;
+        max-width: 230px;
+        flex-shrink: 0;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .feature-icon {
+        font-size: 2rem;
+        color: var(--gold);
+        margin-bottom: 15px;
+    }
+    
+    /* Buttons */
+    .btn-primary {
+        background: var(--secondary-blue);
+        border-color: var(--secondary-blue);
+        padding: 10px 20px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+    }
+    
+    .btn-primary:hover {
+        background: var(--primary-blue);
+        border-color: var(--primary-blue);
+        transform: translateY(-2px);
+    }
+    
+    .btn-outline-primary {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+    
+    .btn-outline-light:hover {
+        background: white;
+        color: var(--primary-blue);
+    }
+    
+    /* Animations */
+    @keyframes countUp {
+        from { 
+            opacity: 0; 
+        }
+        to { 
+            opacity: 1; 
+        }
+    }
+    
+    .count-animate {
+        animation: countUp 1s ease-out;
+    }
+    
+    /* Breadcrumb */
+    .breadcrumb {
+        background: transparent;
+        padding: 0;
+        margin-bottom: 1rem;
+    }
+    
+    /* Improved focus styles for accessibility */
+    a:focus, button:focus {
+        outline: 2px solid var(--accent-red);
+        outline-offset: 2px;
+    }
+    
+    /* Loading optimization */
+    .lazy-load {
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+    
+    .lazy-load.loaded {
+        opacity: 1;
+    }
+    
+    /* Reviews Section */
+    .reviews-section {
+        padding: 100px 0;
+        background: var(--light-blue);
+    }
+    
+    .review-card {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        margin-bottom: 30px;
+        transition: transform 0.3s ease;
+        height: 100%;
+    }
+    
+    .review-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .review-avatar {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 15px;
+    }
+    
+    .stars {
+        color: var(--gold);
+        margin-bottom: 15px;
+    }
+    
+    /* Companies Section */
+    .companies-section {
+        padding: 80px 0;
+        background: white;
+    }
+    
+    .company-logo {
+        height: 60px;
+        margin: 20px;
+        filter: grayscale(100%);
+        transition: all 0.3s ease;
+        opacity: 0.7;
+        object-fit: contain;
+    }
+    
+    .company-logo:hover {
+        filter: grayscale(0%);
+        opacity: 1;
+        transform: scale(1.05);
+    }
+    
+    /* Footer */
+    .footer-links h5 {
+        color: white;
+        margin-bottom: 15px;
+        font-size: 1rem;
+    }
+    
+    .footer-links ul {
+        list-style: none;
+        padding: 0;
+    }
+    
+    .footer-links li {
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+    }
+    
+    .footer-links a {
+        color: #adb5bd;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    
+    .footer-links a:hover {
+        color: white;
+    }
+    
+    .social-icons a {
+        display: inline-block;
+        width: 36px;
+        height: 36px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+        text-align: center;
+        line-height: 36px;
+        margin-right: 8px;
+        color: white;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+    }
+    
+    .social-icons a:hover {
+        background: var(--secondary-blue);
+        transform: translateY(-3px);
+    }
+    
+    /* Modal Styling */
+    .modal-content {
+        border-radius: 15px;
+        border: none;
+    }
+    
+    .modal-header {
+        background: var(--primary-blue);
+        color: white;
+        border-radius: 15px 15px 0 0;
+        border-bottom: none;
+    }
+    
+    .modal-title {
+        font-weight: 600;
+    }
+    
+    .modal-body {
+        max-height: 60vh;
+        overflow-y: auto;
+        padding: 25px;
+    }
+    
+    .modal-footer {
+        border-top: 1px solid #dee2e6;
+        border-radius: 0 0 15px 15px;
+    }
+    
+    /* Hero slider indicators */
+    .slider-indicators {
+        position: absolute;
+        bottom: 30px;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        z-index: 10;
+    }
+    
+    .slider-indicator {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.5);
+        border: 2px solid transparent;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .slider-indicator.active {
+        background: white;
+        transform: scale(1.2);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .hero-section {
+            height: 70vh;
+            min-height: 500px;
+            padding-top: 70px;
+        }
+        
+        .school-logo {
+            width: 80px;
+            height: 80px;
+        }
+        
+        .display-3 {
+            font-size: 2.5rem;
+        }
+        
+        .program-card {
+            flex: 0 0 calc(100% - 20px);
+        }
+        
+        .programs-carousel {
+            padding: 0 40px;
+        }
+        
+        .carousel-btn {
+            width: 40px;
+            height: 40px;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+        }
+        
+        .feature-card {
+            min-width: 200px;
+            max-width: 200px;
+        }
+        
+        .features-track {
+            width: calc(200px * 12);
+        }
+        
+        @keyframes scrollFeatures {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(-200px * 6));
+            }
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .hero-section {
+            height: 60vh;
+            min-height: 400px;
+        }
+        
+        .display-3 {
+            font-size: 2rem;
+        }
+        
+        .school-name {
+            font-size: 0.9rem;
+        }
+        
+        .school-motto {
+            font-size: 0.6rem;
+        }
+        
+        .btn-lg {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+    }
+    
+    /* Print styles */
+    @media print {
+        .navbar, .hero-section, .carousel-btn, .slider-indicators,
+        .btn, .social-icons, .modal-footer .btn:not(.btn-secondary) {
+            display: none !important;
+        }
+        
+        body {
+            padding-top: 0 !important;
+        }
+        
+        .program-card, .review-card {
+            box-shadow: none !important;
+            border: 1px solid #ddd !important;
+        }
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="hero-section text-center py-5 mb-5 bg-light rounded">
-    <h1 class="display-4 fw-bold text-primary">Yazz Communication Academy</h1>
-    <p class="lead">Be Inspired, Learn Today, Lead Tomorrow</p>
-    <p class="mb-4">Transform your career with industry-leading IT education and professional development programs.</p>
-    <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg me-2">Start Your Journey</a>
-    <a href="{{ url_for('marketing.courses') }}" class="btn btn-outline-primary btn-lg">Explore Programs</a>
-</div>
+<!-- Hero Section with Slider -->
+<section id="home" class="hero-section">
+    <!-- Slide 1 -->
+    <div class="hero-slide slide-1 active">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 hero-content">
+                    <img src="{{ url_for('static', filename='images/Yazz Communication.png') }}" alt="Yazz Communication Academy - Premier IT Education" class="school-logo">
+                    <h1 class="display-3 fw-bold mb-3 animate__animated animate__fadeInDown">Yazz Communication Academy</h1>
+                    <p class="motto animate__animated animate__fadeInUp">Be Inspired, Learn Today, Lead Tomorrow</p>
+                    <p class="lead mb-4 animate__animated animate__fadeInUp">Transform your career with industry-leading IT education and professional development programs designed for the digital age.</p>
+                    <div class="d-flex gap-3 justify-content-center animate__animated animate__fadeInUp">
+                        <a href="{{ url_for('auth.register') }}" class="btn btn-light btn-lg">Start Your Journey</a>
+                        <a href="#programs" class="btn btn-outline-light btn-lg">Explore Programs</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Slide 2 -->
+    <div class="hero-slide slide-2">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 hero-content">
+                    <h2 class="display-4 fw-bold mb-4">Hands-On Learning Experience</h2>
+                    <p class="lead mb-4">Learn by doing with real-world projects, industry mentors, and cutting-edge technology infrastructure.</p>
+                    <a href="#programs" class="btn btn-light btn-lg">View Our Courses</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Slide 3 -->
+    <div class="hero-slide slide-3">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 hero-content">
+                    <h2 class="display-4 fw-bold mb-4">Career-Focused Education</h2>
+                    <p class="lead mb-4">95% of our graduates secure employment within 3 months of completion. Your success is our priority.</p>
+                    <a href="{{ url_for('auth.register') }}" class="btn btn-light btn-lg">Join Success Stories</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Slider indicators -->
+    <div class="slider-indicators">
+        <div class="slider-indicator active" data-slide="0" aria-label="Go to slide 1"></div>
+        <div class="slider-indicator" data-slide="1" aria-label="Go to slide 2"></div>
+        <div class="slider-indicator" data-slide="2" aria-label="Go to slide 3"></div>
+    </div>
+</section>
 
-<div class="row mb-5">
-    <div class="col-md-4 mb-4">
-        <div class="card h-100 border-0 shadow-sm">
-            <div class="card-body text-center">
-                <i class="fas fa-laptop-code fa-3x text-primary mb-3"></i>
-                <h3 class="card-title">Tech & Digital Skills</h3>
-                <p class="card-text">Python, Web Development, Cybersecurity, Data Analytics and more.</p>
+<!-- Stats Section -->
+<section class="stats-section">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-number count-animate" data-count="500">0</div>
+                <p class="text-muted fw-bold">Students Trained</p>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-number count-animate" data-count="15">0</div>
+                <p class="text-muted fw-bold">Professional Courses</p>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-number count-animate" data-count="20">0</div>
+                <p class="text-muted fw-bold">Expert Instructors</p>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-number count-animate" data-count="95">0</div>
+                <p class="text-muted fw-bold">Completion Rate</p>
             </div>
         </div>
     </div>
-    <div class="col-md-4 mb-4">
-        <div class="card h-100 border-0 shadow-sm">
-            <div class="card-body text-center">
-                <i class="fas fa-users fa-3x text-primary mb-3"></i>
-                <h3 class="card-title">Communication & Soft Skills</h3>
-                <p class="card-text">Public Speaking, Speech Writing, Storytelling for professional growth.</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4 mb-4">
-        <div class="card h-100 border-0 shadow-sm">
-            <div class="card-body text-center">
-                <i class="fas fa-chalkboard-teacher fa-3x text-primary mb-3"></i>
-                <h3 class="card-title">Teacher Training</h3>
-                <p class="card-text">Scratch 3.0, Canva, Google Classroom for modern educators.</p>
-            </div>
-        </div>
-    </div>
-</div>
+</section>
 
-<div class="text-center py-4">
-    <h2>Ready to Transform Your Career?</h2>
-    <p class="lead mb-4">Join hundreds of successful graduates who transformed their careers with YCA.</p>
-    <a href="{{ url_for('auth.register') }}" class="btn btn-success btn-lg">Apply Now</a>
-</div>
+<!-- Programs Section -->
+<section id="programs" class="programs-section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-4 fw-bold mb-3" style="color: var(--primary-blue);">Our IT Education Programs</h2>
+            <p class="lead text-muted">Choose from our comprehensive range of IT programs designed for career success</p>
+        </div>
+        
+        <div class="programs-carousel">
+            <button class="carousel-btn prev" aria-label="Previous programs">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="carousel-btn next" aria-label="Next programs">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            
+            <div class="programs-track">
+                <!-- Software Engineering -->
+                <article class="program-card">
+                    <div class="card-body text-center p-4">
+                        <div class="program-icon">
+                            <i class="fas fa-laptop-code" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="card-title mb-3 h4">Software Engineering</h3>
+                        <p class="card-text text-muted mb-4">Become a professional software developer with comprehensive training in modern technologies.</p>
+                        <ul class="list-unstyled text-start mb-4">
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>Python & C Programming</li>
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>Data Structures & Algorithms</li>
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>Software Development Lifecycle</li>
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>12 Months Duration</li>
+                        </ul>
+                        <button class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#programModal1">Learn More</button>
+                    </div>
+                </article>
+                
+                <!-- Website Development -->
+                <article class="program-card">
+                    <div class="card-body text-center p-4">
+                        <div class="program-icon">
+                            <i class="fas fa-code" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="card-title mb-3 h4">Website Development</h3>
+                        <p class="card-text text-muted mb-4">Master full-stack web development with the latest frameworks and technologies.</p>
+                        <ul class="list-unstyled text-start mb-4">
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>HTML, CSS, JavaScript</li>
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>Python Web Frameworks</li>
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>Database Integration</li>
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>6 Months Duration</li>
+                        </ul>
+                        <button class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#programModal2">Learn More</button>
+                    </div>
+                </article>
+                
+                <!-- Data Analytics -->
+                <article class="program-card">
+                    <div class="card-body text-center p-4">
+                        <div class="program-icon">
+                            <i class="fas fa-chart-bar" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="card-title mb-3 h4">Data Analytics</h3>
+                        <p class="card-text text-muted mb-4">Learn to analyze and visualize data to drive business decisions and insights.</p>
+                        <ul class="list-unstyled text-start mb-4">
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>Python for Data Analysis</li>
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>Excel & VBA Mastery</li>
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>SQL & Tableau</li>
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>8 Months Duration</li>
+                        </ul>
+                        <button class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#programModal3">Learn More</button>
+                    </div>
+                </article>
+                
+                <!-- Cybersecurity -->
+                <article class="program-card">
+                    <div class="card-body text-center p-4">
+                        <div class="program-icon">
+                            <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="card-title mb-3 h4">Cybersecurity</h3>
+                        <p class="card-text text-muted mb-4">Protect digital assets and master network security, ethical hacking, and cyber forensics.</p>
+                        <ul class="list-unstyled text-start mb-4">
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>Ethical Hacking</li>
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>Network Security</li>
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>Cyber Forensics</li>
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>10 Months Duration</li>
+                        </ul>
+                        <button class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#programModal4">Learn More</button>
+                    </div>
+                </article>
+                
+                <!-- Computer Literacy -->
+                <article class="program-card">
+                    <div class="card-body text-center p-4">
+                        <div class="program-icon">
+                            <i class="fas fa-desktop" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="card-title mb-3 h4">Computer Literacy</h3>
+                        <p class="card-text text-muted mb-4">Build essential computer skills for the modern workplace and digital life.</p>
+                        <ul class="list-unstyled text-start mb-4">
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>Computer Basics</li>
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>Microsoft Office Suite</li>
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>Internet & Email Skills</li>
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>3 Months Duration</li>
+                        </ul>
+                        <button class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#programModal5">Learn More</button>
+                    </div>
+                </article>
+                
+                <!-- AI Career Essentials -->
+                <article class="program-card">
+                    <div class="card-body text-center p-4">
+                        <div class="program-icon">
+                            <i class="fas fa-robot" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="card-title mb-3 h4">AI Career Essentials</h3>
+                        <p class="card-text text-muted mb-4">Master the fundamentals of artificial intelligence and machine learning for today's job market.</p>
+                        <ul class="list-unstyled text-start mb-4">
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>AI Fundamentals & Ethics</li>
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>Machine Learning Basics</li>
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>AI Tools & Applications</li>
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>4 Months Duration</li>
+                        </ul>
+                        <button class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#programModal6">Learn More</button>
+                    </div>
+                </article>
+                
+                <!-- Virtual Assistant -->
+                <article class="program-card">
+                    <div class="card-body text-center p-4">
+                        <div class="program-icon">
+                            <i class="fas fa-headset" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="card-title mb-3 h4">Virtual Assistant</h3>
+                        <p class="card-text text-muted mb-4">Develop the skills needed to provide professional remote administrative support services.</p>
+                        <ul class="list-unstyled text-start mb-4">
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>Administrative Support Skills</li>
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>Communication & Organization</li>
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>Remote Work Tools</li>
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>3 Months Duration</li>
+                        </ul>
+                        <button class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#programModal7">Learn More</button>
+                    </div>
+                </article>
+                
+                <!-- Professional Foundations -->
+                <article class="program-card">
+                    <div class="card-body text-center p-4">
+                        <div class="program-icon">
+                            <i class="fas fa-user-graduate" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="card-title mb-3 h4">Professional Foundations</h3>
+                        <p class="card-text text-muted mb-4">Build essential workplace skills for career success in any industry.</p>
+                        <ul class="list-unstyled text-start mb-4">
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>Communication Skills</li>
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>Professional Etiquette</li>
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>Time Management</li>
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>2 Months Duration</li>
+                        </ul>
+                        <button class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#programModal8">Learn More</button>
+                    </div>
+                </article>
+                
+                <!-- Graphic Design -->
+                <article class="program-card">
+                    <div class="card-body text-center p-4">
+                        <div class="program-icon">
+                            <i class="fas fa-palette" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="card-title mb-3 h4">Graphic Design</h3>
+                        <p class="card-text text-muted mb-4">Learn visual communication and design principles to create compelling graphics.</p>
+                        <ul class="list-unstyled text-start mb-4">
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>Adobe Creative Suite</li>
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>Design Principles & Typography</li>
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>Branding & Visual Identity</li>
+                            <li><i class="fas fa-check text-success me-2" aria-hidden="true"></i>6 Months Duration</li>
+                        </ul>
+                        <button class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#programModal9">Learn More</button>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us Section -->
+<section id="why-choose" class="why-choose-section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-4 fw-bold mb-3">Why Choose Yazz Academy for IT Education?</h2>
+            <p class="lead">Discover what makes us the preferred choice for IT education and career transformation</p>
+        </div>
+        
+        <div class="features-scroll-container">
+            <div class="features-track">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-tie" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="h4">Industry Expert Instructors</h3>
+                    <p>Learn from professionals with real-world experience and proven track records in the IT industry.</p>
+                </div>
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-hands-helping" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="h4">Hands-on Projects</h3>
+                    <p>Work on real projects that build your portfolio and give you practical experience employers value.</p>
+                </div>
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-briefcase" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="h4">Career Support</h3>
+                    <p>Get dedicated career guidance, resume reviews, and interview preparation to land your dream job.</p>
+                </div>
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="h4">Flexible Learning</h3>
+                    <p>Choose from full-time, part-time, or online learning options that fit your schedule and lifestyle.</p>
+                </div>
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-certificate" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="h4">Certificate Programs</h3>
+                    <p>Earn industry-recognized certificates that validate your skills and enhance your career prospects.</p>
+                </div>
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-users" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="h4">Community Support</h3>
+                    <p>Join a vibrant community of learners, alumni, and industry professionals for networking and growth.</p>
+                </div>
+                <!-- Duplicate for seamless scrolling -->
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-tie" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="h4">Industry Expert Instructors</h3>
+                    <p>Learn from professionals with real-world experience and proven track records in the IT industry.</p>
+                </div>
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-hands-helping" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="h4">Hands-on Projects</h3>
+                    <p>Work on real projects that build your portfolio and give you practical experience employers value.</p>
+                </div>
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-briefcase" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="h4">Career Support</h3>
+                    <p>Get dedicated career guidance, resume reviews, and interview preparation to land your dream job.</p>
+                </div>
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="h4">Flexible Learning</h3>
+                    <p>Choose from full-time, part-time, or online learning options that fit your schedule and lifestyle.</p>
+                </div>
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-certificate" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="h4">Certificate Programs</h3>
+                    <p>Earn industry-recognized certificates that validate your skills and enhance your career prospects.</p>
+                </div>
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-users" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="h4">Community Support</h3>
+                    <p>Join a vibrant community of learners, alumni, and industry professionals for networking and growth.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Reviews Section -->
+<section id="reviews" class="reviews-section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-4 fw-bold mb-3" style="color: var(--primary-blue);">What Our Students & Instructors Say</h2>
+            <p class="lead text-muted">Hear from our community about their experiences at Yazz Academy</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="review-card text-center">
+                    <img src="{{ url_for('static', filename='images/student1.jpg') }}" alt="Student Aisha Bello" class="review-avatar">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="mb-3">"The Software Engineering program transformed my career. I went from zero coding experience to landing a job at a tech startup in just 9 months!"</p>
+                    <h5 class="fw-bold">Aisha Bello</h5>
+                    <p class="text-muted">Software Engineering Graduate</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="review-card text-center">
+                    <img src="{{ url_for('static', filename='images/student2.jpg') }}" alt="Student Chinedu Okoro" class="review-avatar">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="mb-3">"The hands-on approach at Yazz Academy made all the difference. I was able to build a portfolio that impressed employers during interviews."</p>
+                    <h5 class="fw-bold">Chinedu Okoro</h5>
+                    <p class="text-muted">Web Development Graduate</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="review-card text-center">
+                    <img src="{{ url_for('static', filename='images/instructor1.jpg') }}" alt="Instructor Dr. Fatima Ahmed" class="review-avatar">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="mb-3">"Teaching at Yazz Academy has been incredibly rewarding. Our students are motivated, and it's amazing to see their growth throughout the programs."</p>
+                    <h5 class="fw-bold">Dr. Fatima Ahmed</h5>
+                    <p class="text-muted">Cybersecurity Instructor</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Companies Section -->
+<section id="companies" class="companies-section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-4 fw-bold mb-3" style="color: var(--primary-blue);">Companies Investing in Our Talent</h2>
+            <p class="lead text-muted">Our graduates have been hired by leading companies across various industries</p>
+        </div>
+        
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-3 col-6 text-center">
+                <img src="{{ url_for('static', filename='images/microsoft-logo.png') }}" alt="Microsoft" class="company-logo">
+            </div>
+            <div class="col-md-3 col-6 text-center">
+                <img src="{{ url_for('static', filename='images/google-logo.png') }}" alt="Google" class="company-logo">
+            </div>
+            <div class="col-md-3 col-6 text-center">
+                <img src="{{ url_for('static', filename='images/royal-gem-logo.png') }}" alt="Royal Gem Mathematics School" class="company-logo">
+            </div>
+            <div class="col-md-3 col-6 text-center">
+                <img src="{{ url_for('static', filename='images/agriculture-ministry-logo.png') }}" alt="Federal Ministry of Agriculture" class="company-logo">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h2 class="display-5 fw-bold mb-4" style="color: var(--primary-blue);">About Yazz Communication Academy</h2>
+                <p class="lead mb-4">Yazz Communication Academy is a premier institution dedicated to providing quality IT education and professional development programs that transform careers and lives.</p>
+                <p>We believe in practical, hands-on learning that prepares students for real-world challenges. Our curriculum is designed by industry experts and updated regularly to keep pace with technological advancements.</p>
+                <div class="row mt-4">
+                    <div class="col-6">
+                        <h3 class="h5">Our Mission</h3>
+                        <p class="text-muted">To empower individuals with cutting-edge IT skills for successful careers in the digital economy.</p>
+                    </div>
+                    <div class="col-6">
+                        <h3 class="h5">Our Vision</h3>
+                        <p class="text-muted">To be the leading provider of IT education and career transformation in the region.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <img src="{{ url_for('static', filename='images/about-image.jpg') }}" alt="Students learning at Yazz Communication Academy" class="img-fluid rounded shadow">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold" style="color: var(--primary-blue);">Contact Yazz Communication Academy</h2>
+            <p class="lead text-muted">Get in touch with our admissions team for program information</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="card program-card border-0">
+                    <div class="card-body p-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <i class="fas fa-map-marker-alt text-primary me-2" aria-hidden="true"></i>
+                                    <strong>Address:</strong>
+                                    <p class="text-muted mt-1">Flat 2A, House 83B, El-Habitat Close, Dogongada, Abuja City</p>
+                                </div>
+                                <div class="mb-4">
+                                    <i class="fas fa-phone text-primary me-2" aria-hidden="true"></i>
+                                    <strong>Phone:</strong>
+                                    <p class="text-muted mt-1">+234-907-986-9903</p>
+                                </div>
+                                <div class="mb-4">
+                                    <i class="fas fa-envelope text-primary me-2" aria-hidden="true"></i>
+                                    <strong>Email:</strong>
+                                    <p class="text-muted mt-1">services@yca-abuja.com</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <form id="contact-form" method="POST" action="{{ url_for('marketing.contact_submit') }}">
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">Your Name</label>
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Your Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="message" class="form-label">Your Message</label>
+                                        <textarea class="form-control" id="message" name="message" rows="3" placeholder="Your Message" required></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100">Send Message</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    // Hero slider functionality
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.hero-slide');
+    const indicators = document.querySelectorAll('.slider-indicator');
+    let slideInterval;
+    
+    function showSlide(index) {
+        // Hide all slides
+        slides.forEach(slide => slide.classList.remove('active'));
+        indicators.forEach(indicator => indicator.classList.remove('active'));
+        
+        // Show selected slide
+        slides[index].classList.add('active');
+        indicators[index].classList.add('active');
+        currentSlide = index;
+    }
+    
+    function nextSlide() {
+        let nextIndex = currentSlide + 1;
+        if (nextIndex >= slides.length) nextIndex = 0;
+        showSlide(nextIndex);
+    }
+    
+    function prevSlide() {
+        let prevIndex = currentSlide - 1;
+        if (prevIndex < 0) prevIndex = slides.length - 1;
+        showSlide(prevIndex);
+    }
+    
+    // Add click events to indicators
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+            showSlide(index);
+            resetSlideInterval();
+        });
+    });
+    
+    // Auto-advance slides every 5 seconds
+    function startSlideInterval() {
+        slideInterval = setInterval(nextSlide, 5000);
+    }
+    
+    function resetSlideInterval() {
+        clearInterval(slideInterval);
+        startSlideInterval();
+    }
+    
+    startSlideInterval();
+    
+    // Pause auto-slide on hover
+    const heroSection = document.querySelector('.hero-section');
+    heroSection.addEventListener('mouseenter', () => clearInterval(slideInterval));
+    heroSection.addEventListener('mouseleave', startSlideInterval);
+
+    // Programs carousel functionality
+    const track = document.querySelector('.programs-track');
+    const prevBtn = document.querySelector('.carousel-btn.prev');
+    const nextBtn = document.querySelector('.carousel-btn.next');
+    const programCards = document.querySelectorAll('.program-card');
+    let currentPosition = 0;
+    const cardWidth = programCards[0].offsetWidth + 20; // card width + gap
+    
+    function updateCarousel() {
+        track.style.transform = `translateX(${currentPosition}px)`;
+    }
+    
+    nextBtn.addEventListener('click', () => {
+        const maxPosition = -cardWidth * (programCards.length - 3);
+        if (currentPosition > maxPosition) {
+            currentPosition -= cardWidth;
+            updateCarousel();
+        }
+    });
+    
+    prevBtn.addEventListener('click', () => {
+        if (currentPosition < 0) {
+            currentPosition += cardWidth;
+            updateCarousel();
+        }
+    });
+
+    // Count-up animation for stats
+    function animateCount() {
+        const counters = document.querySelectorAll('.stat-number');
+        
+        counters.forEach(counter => {
+            const target = +counter.getAttribute('data-count');
+            const duration = 2000; // 2 seconds
+            const increment = target / (duration / 16); // 60fps
+            let current = 0;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    counter.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    counter.textContent = Math.floor(current);
+                }
+            }, 16);
+        });
+    }
+
+    // Intersection Observer for animations
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                if (entry.target.classList.contains('stat-number')) {
+                    animateCount();
+                }
+                entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+            }
+        });
+    }, observerOptions);
+
+    // Observe elements
+    document.querySelectorAll('.stat-number, .program-card, .review-card').forEach(el => {
+        observer.observe(el);
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href === '#' || href.startsWith('#!')) return;
+            
+            const targetElement = document.querySelector(href);
+            if (targetElement) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+                
+                // Update URL without scrolling
+                history.pushState(null, null, href);
+            }
+        });
+    });
+
+    // Contact form submission
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            // Validation is handled by Flask-WTF on the server side
+            // This is just for UX
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...';
+            submitBtn.disabled = true;
+        });
+    }
+    
+    function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+
+    // Keyboard navigation for accessibility
+    document.addEventListener('keydown', function(e) {
+        // Close modals with Escape key
+        if (e.key === 'Escape') {
+            const modals = document.querySelectorAll('.modal.show');
+            modals.forEach(modal => {
+                bootstrap.Modal.getInstance(modal).hide();
+            });
+        }
+        
+        // Navigate carousel with arrow keys when focused
+        if (document.activeElement === prevBtn || document.activeElement === nextBtn) {
+            if (e.key === 'ArrowLeft') {
+                prevBtn.click();
+            } else if (e.key === 'ArrowRight') {
+                nextBtn.click();
+            }
+        }
+        
+        // Navigate hero slider with arrow keys
+        if (e.key === 'ArrowLeft') {
+            prevSlide();
+            resetSlideInterval();
+        } else if (e.key === 'ArrowRight') {
+            nextSlide();
+            resetSlideInterval();
+        }
+    });
+
+    // Initialize tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+
+    // Handle window resize for responsive carousel
+    window.addEventListener('resize', function() {
+        // Recalculate card width on resize
+        if (programCards.length > 0) {
+            const newCardWidth = programCards[0].offsetWidth + 20;
+            if (Math.abs(cardWidth - newCardWidth) > 10) { // Only update if significant change
+                currentPosition = Math.round(currentPosition / cardWidth) * newCardWidth;
+                updateCarousel();
+            }
+        }
+    });
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        // Trigger initial animations
+        setTimeout(() => {
+            document.querySelectorAll('.animate__animated').forEach(el => {
+                el.style.opacity = '1';
+            });
+        }, 100);
+        
+        // Set initial carousel position
+        updateCarousel();
+    });
+</script>
 {% endblock %}

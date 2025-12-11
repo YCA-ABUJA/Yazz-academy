@@ -2,64 +2,101 @@
 
 {% block title %}Courses - Yazz Communication Academy{% endblock %}
 
-{% block content %}
-<div class="row mb-4">
-    <div class="col">
-        <h1 class="display-5">Our Courses & Programs</h1>
-        <p class="lead">Choose from our comprehensive range of IT education programs</p>
-    </div>
-</div>
+{% block breadcrumb_items %}
+    <li class="breadcrumb-item active" aria-current="page">All Courses</li>
+{% endblock %}
 
-<div class="row mb-4">
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Course Categories</h5>
-                <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-outline-primary active">All Courses</button>
-                    <button type="button" class="btn btn-outline-primary">Tech & Digital Skills</button>
-                    <button type="button" class="btn btn-outline-primary">Communication & Soft Skills</button>
-                    <button type="button" class="btn btn-outline-primary">Teacher Training</button>
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold mb-3" style="color: var(--primary-blue);">Our Course Catalog</h1>
+        <p class="lead text-muted">Browse our comprehensive range of IT and professional development programs</p>
+    </div>
+    
+    <div class="row mb-4">
+        <div class="col-md-6 mb-3">
+            <input type="text" class="form-control" id="courseSearch" placeholder="Search courses...">
+        </div>
+        <div class="col-md-6 mb-3">
+            <select class="form-select" id="categoryFilter">
+                <option value="">All Categories</option>
+                <option value="Tech & Digital Skills">Tech & Digital Skills</option>
+                <option value="Communication & Soft Skills">Communication & Soft Skills</option>
+                <option value="Teacher Training">Teacher Training</option>
+                <option value="Seasonal & Special">Seasonal & Special</option>
+            </select>
+        </div>
+    </div>
+    
+    <div class="row" id="coursesContainer">
+        {% if programs %}
+            {% for program in programs %}
+            <div class="col-lg-4 col-md-6 mb-4 course-item" data-category="{{ program.category }}">
+                <div class="card h-100 program-card">
+                    <div class="card-body">
+                        <div class="text-center mb-3">
+                            <i class="fas fa-laptop-code fa-3x text-primary"></i>
+                        </div>
+                        <h3 class="card-title h5">{{ program.name }}</h3>
+                        <p class="text-muted small">{{ program.code }} • {{ program.display_duration }}</p>
+                        <p class="card-text">{{ program.description[:150] }}...</p>
+                        
+                        <div class="mb-3">
+                            <h6 class="fw-bold">Learning Outcomes:</h6>
+                            <ul class="list-unstyled">
+                                {% for outcome in program.learning_outcomes[:3] %}
+                                <li><i class="fas fa-check text-success me-2"></i>{{ outcome }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <span class="h5 mb-0">{{ program.display_price }}</span>
+                            <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Enroll Now</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12 text-center py-5">
+                <p class="lead">No courses available at the moment.</p>
+            </div>
+        {% endif %}
     </div>
 </div>
+{% endblock %}
 
-<div class="row">
-    <div class="col-md-4 mb-4">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">Python Programming</h5>
-                <h6 class="card-subtitle mb-2 text-muted">13 weeks • ₦95,000</h6>
-                <p class="card-text">Learn Python from basics to advanced concepts with hands-on projects.</p>
-                <a href="#" class="btn btn-primary">Learn More</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4 mb-4">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">Web Development</h5>
-                <h6 class="card-subtitle mb-2 text-muted">14 weeks • ₦120,000</h6>
-                <p class="card-text">Full-stack web development with modern frameworks.</p>
-                <a href="#" class="btn btn-primary">Learn More</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4 mb-4">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">Data Analytics</h5>
-                <h6 class="card-subtitle mb-2 text-muted">8 weeks • ₦90,000</h6>
-                <p class="card-text">Learn to analyze and visualize data for insights.</p>
-                <a href="#" class="btn btn-primary">Learn More</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="text-center mt-4">
-    <a href="{{ url_for('auth.register') }}" class="btn btn-success btn-lg">Enroll Now</a>
-</div>
+{% block extra_js %}
+<script>
+    // Course search and filter functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const courseSearch = document.getElementById('courseSearch');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const courseItems = document.querySelectorAll('.course-item');
+        
+        function filterCourses() {
+            const searchTerm = courseSearch.value.toLowerCase();
+            const category = categoryFilter.value;
+            
+            courseItems.forEach(item => {
+                const title = item.querySelector('.card-title').textContent.toLowerCase();
+                const description = item.querySelector('.card-text').textContent.toLowerCase();
+                const itemCategory = item.getAttribute('data-category');
+                
+                const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
+                const matchesCategory = !category || itemCategory === category;
+                
+                if (matchesSearch && matchesCategory) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+        
+        courseSearch.addEventListener('input', filterCourses);
+        categoryFilter.addEventListener('change', filterCourses);
+    });
+</script>
 {% endblock %}

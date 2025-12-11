@@ -57,12 +57,14 @@ def register_blueprints(app):
     from .teacher.routes import teacher_bp
     from .student.routes import student_bp
     from .marketing.routes import marketing_bp
+    from .dashboard.routes import dashboard_bp
     
     app.register_blueprint(auth_bp)
     app.register_blueprint(admin_bp, url_prefix='/admin')
     app.register_blueprint(teacher_bp, url_prefix='/teacher')
     app.register_blueprint(student_bp, url_prefix='/student')
     app.register_blueprint(marketing_bp)
+    app.register_blueprint(dashboard_bp, url_prefix='/dashboard')
 
 
 def register_error_handlers(app):
